@@ -1,4 +1,5 @@
 Summary:	Tool to maintain user profiles in a GNOME desktop
+Summary(pl):	Narzêdzie do zarz±dzania profilami u¿ytkowników w ¶rodowisku GNOME
 Name:		sabayon
 Version:	2.12.3
 Release:	0.1
@@ -9,7 +10,7 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/sabayon/2.12/%{name}-%{version}.
 URL:		http://www.gnome.org/projects/sabayon
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
-BuildRequires:	gtk+2-devel >= 2.8.17
+BuildRequires:	gtk+2-devel >= 2:2.8.17
 BuildRequires:	python-devel
 BuildRequires:	python-pygtk-devel >= 2.8.6
 BuildRequires:	usermode
@@ -28,16 +29,25 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Sabayon is a tool to help sysadmins and user change and maintain the
 default behaviour of the GNOME desktop.
 
+%description -l pl
+Sabayon to narzêdzie pomagaj±ce administratorom i u¿ytkownikom
+zmieniaæ i utrzymywaæ domy¶lne zachowanie ¶rodowiska GNOME.
+
 %package admin
 Summary:	Graphical tools for Sabayon profile management
+Summary(pl):	Graficzne narzêdzia do zarz±dzania profilami Sabayon
 Group:		Applications/System
 Requires:	%{name} = %{version}-%{release}
-Requires:	shadow-utils
-Requires:	xorg-x11-Xnest
+Requires:	shadow
+Requires:	xorg-xserver-Xnest
 
 %description admin
 The sabayon-admin package contains the graphical tools which a
 sysadmin should use to manage Sabayon profiles.
+
+%description admin -l pl
+Ten pakiet zawiera graficzne narzêdzia dla administratora do
+zarz±dzania profilami Sabayon.
 
 %prep
 %setup -q
@@ -75,25 +85,25 @@ rm -f $RPM_BUILD_ROOT%{py_sitedir}/%{name}/xlib.a
 rm -rf $RPM_BUILD_ROOT
 
 %pre admin
-/usr/sbin/groupadd -r %{name}-admin &>/dev/null || :
-%useradd  -r -s /sbin/nologin -c "Sabayon user" -g %{name}-admin %{name}-admin &>/dev/null || :
-/usr/sbin/usermod -d "" %{name}-admin &>/dev/null || :
+%groupadd -r %{name}-admin
+%useradd -r -s /sbin/nologin -c "Sabayon user" -g %{name}-admin %{name}-admin
+/usr/sbin/usermod -d "" %{name}-admin >/dev/null 2>&1 || :
 
 %post admin
 touch --no-create %{_datadir}/icons/hicolor
 if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-  gtk-update-icon-cache -q %{_datadir}/icons/hicolor
+	gtk-update-icon-cache -q %{_datadir}/icons/hicolor
 fi
 
 %postun admin
 touch --no-create %{_datadir}/icons/hicolor
 if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-  gtk-update-icon-cache -q %{_datadir}/icons/hicolor
+	gtk-update-icon-cache -q %{_datadir}/icons/hicolor
 fi
 
 if [ $1 -eq 0 ]; then
-%{_sbindir}/userdel %{name}-admin &>/dev/null || :
-%{_sbindir}/groupdel %{name}-admin &>/dev/null || :
+	%userremove %{name}-admin
+	%groupremove %{name}-admin
 fi
 
 %files -f sabayon.lang
@@ -124,10 +134,12 @@ fi
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_sbindir}/%{name}
 %{_libexecdir}/%{name}*
+%dir %{_datadir}/%{name}
+%dir %{_datadir}/%{name}/glade
 %{_datadir}/%{name}/glade/*.glade
 %{_desktopdir}/gnome-%{name}.desktop
 %{_iconsdir}/hicolor/48x48/apps/%{name}.png
-%{py_sitedir}/%{name}/xlib.so
+%attr(755,root,root) %{py_sitedir}/%{name}/xlib.so
 %{py_sitedir}/%{name}/aboutdialog.py*
 %{py_sitedir}/%{name}/changeswindow.py*
 %{py_sitedir}/%{name}/editorwindow.py*
