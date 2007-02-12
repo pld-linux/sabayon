@@ -1,5 +1,5 @@
 Summary:	Tool to maintain user profiles in a GNOME desktop
-Summary(pl.UTF-8):   Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
+Summary(pl.UTF-8):	Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
 Name:		sabayon
 Version:	2.12.3
 Release:	0.1
@@ -35,7 +35,7 @@ zmieniać i utrzymywać domyślne zachowanie środowiska GNOME.
 
 %package admin
 Summary:	Graphical tools for Sabayon profile management
-Summary(pl.UTF-8):   Graficzne narzędzia do zarządzania profilami Sabayon
+Summary(pl.UTF-8):	Graficzne narzędzia do zarządzania profilami Sabayon
 Group:		Applications/System
 Requires:	%{name} = %{version}-%{release}
 Requires:	shadow
