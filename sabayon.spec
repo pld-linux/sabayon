@@ -1,5 +1,5 @@
 Summary:	Tool to maintain user profiles in a GNOME desktop
-Summary(pl):	Narzêdzie do zarz±dzania profilami u¿ytkowników w ¶rodowisku GNOME
+Summary(pl.UTF-8):   NarzÄ™dzie do zarzÄ…dzania profilami uÅ¼ytkownikÃ³w w Å›rodowisku GNOME
 Name:		sabayon
 Version:	2.12.3
 Release:	0.1
@@ -29,13 +29,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Sabayon is a tool to help sysadmins and user change and maintain the
 default behaviour of the GNOME desktop.
 
-%description -l pl
-Sabayon to narzêdzie pomagaj±ce administratorom i u¿ytkownikom
-zmieniaæ i utrzymywaæ domy¶lne zachowanie ¶rodowiska GNOME.
+%description -l pl.UTF-8
+Sabayon to narzÄ™dzie pomagajÄ…ce administratorom i uÅ¼ytkownikom
+zmieniaÄ‡ i utrzymywaÄ‡ domyÅ›lne zachowanie Å›rodowiska GNOME.
 
 %package admin
 Summary:	Graphical tools for Sabayon profile management
-Summary(pl):	Graficzne narzêdzia do zarz±dzania profilami Sabayon
+Summary(pl.UTF-8):   Graficzne narzÄ™dzia do zarzÄ…dzania profilami Sabayon
 Group:		Applications/System
 Requires:	%{name} = %{version}-%{release}
 Requires:	shadow
@@ -45,9 +45,9 @@ Requires:	xorg-xserver-Xnest
 The sabayon-admin package contains the graphical tools which a
 sysadmin should use to manage Sabayon profiles.
 
-%description admin -l pl
-Ten pakiet zawiera graficzne narzêdzia dla administratora do
-zarz±dzania profilami Sabayon.
+%description admin -l pl.UTF-8
+Ten pakiet zawiera graficzne narzÄ™dzia dla administratora do
+zarzÄ…dzania profilami Sabayon.
 
 %prep
 %setup -q
