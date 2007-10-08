@@ -1,12 +1,12 @@
 Summary:	Tool to maintain user profiles in a GNOME desktop
 Summary(pl.UTF-8):	Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
 Name:		sabayon
-Version:	2.12.3
+Version:	2.20.1
 Release:	0.1
 License:	GPL
 Group:		Applications/System
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/sabayon/2.12/%{name}-%{version}.tar.bz2
-# Source0-md5:	259b56fecdba0cb5d2c93f2999d04900
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/sabayon/2.20/%{name}-%{version}.tar.bz2
+# Source0-md5:	1d3217ddffa413651d918844e5f5a7d9
 URL:		http://www.gnome.org/projects/sabayon
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
