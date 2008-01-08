@@ -1,3 +1,6 @@
+# TODO
+# - useradd/groupadd broken (no uid/gid)
+# - xorg-x11-devel doesn't exist
 Summary:	Tool to maintain user profiles in a GNOME desktop
 Summary(pl.UTF-8):	Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
 Name:		sabayon
