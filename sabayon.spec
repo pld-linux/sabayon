@@ -1,3 +1,5 @@
+# TODO
+# - nonstandard in (in pld means) %config in files
 Summary:	Tool to maintain user profiles in a GNOME desktop
 Summary(pl.UTF-8):	Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
 Name:		sabayon
@@ -113,7 +115,7 @@ rm -rf $RPM_BUILD_ROOT
 %update_desktop_database_postun
 %update_icon_cache hicolor
 
-if [ $1 -eq 0 ]; then
+if [ "$1" -eq 0 ]; then
 	%userremove sabayon
 	%groupremove sabayon
 fi
