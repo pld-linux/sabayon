@@ -1,0 +1,23 @@
+--- sabayon-2.22.0/configure.ac~	2008-03-11 21:41:44.000000000 +0100
++++ sabayon-2.22.0/configure.ac	2008-03-12 23:03:58.670495070 +0100
+@@ -111,6 +111,7 @@
+   AC_CHECK_FILE(/etc/mandriva-release, with_distro="mandriva")
+   AC_CHECK_FILE(/etc/mandrakelinux-release, with_distro="mandriva")
+   AC_CHECK_FILE(/etc/frugalware-release, with_distro="frugalware")
++  AC_CHECK_FILE(/etc/pld-release, with_distro="pld")
+ fi
+ with_distro=`echo ${with_distro} | tr '[[:upper:]]' '[[:lower:]]' `
+ 
+@@ -161,6 +162,12 @@
+       install_xinitrc_script="yes"
+       XINITRC_SYSCONFDIR="X11/xinit/xinitrc.d"
+       ;;
++    pld)
++      XSESSION="/etc/gdm/Xsession"
++      SESSION_NAME="gnome-session"
++      install_xinitrc_script="yes"
++      XINITRC_SYSCONFDIR="X11/xinit/xinitrc.d"
++      ;;
+     *)
+       echo "Your distribution (${with_distro}) is not yet supported!  (patches welcome)"
+       exit 1

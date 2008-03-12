@@ -1,0 +1,12 @@
+--- sabayon-2.22.0/admin-tool/sabayon-session~	2008-03-11 21:41:44.000000000 +0100
++++ sabayon-2.22.0/admin-tool/sabayon-session	2008-03-12 23:48:12.991223866 +0100
+@@ -25,6 +25,9 @@
+     import pygtk; pygtk.require('2.0');
+     import gtk
+ 
++    #make sure we don't end up importing libxml2 from libdir
++    sys.path.pop(0)
++
+     from sabayon import debuglog
+     from sabayon import config
+     from sabayon import errors
