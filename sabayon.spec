@@ -4,7 +4,7 @@ Summary:	Tool to maintain user profiles in a GNOME desktop
 Summary(pl.UTF-8):	Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
 Name:		sabayon
 Version:	2.22.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/sabayon/2.22/%{name}-%{version}.tar.bz2
@@ -75,7 +75,8 @@ zarządzania profilami Sabayon.
 %{__autoconf}
 %{__automake}
 %configure \
-	--with-prototype-user=sabayon
+	--with-prototype-user=sabayon \
+	--with-distro=pld
 
 %{__make}
 
