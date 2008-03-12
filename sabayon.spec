@@ -1,30 +1,33 @@
 # TODO
 # - useradd/groupadd broken (no uid/gid)
-# - xorg-x11-devel doesn't exist
 Summary:	Tool to maintain user profiles in a GNOME desktop
 Summary(pl.UTF-8):	Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
 Name:		sabayon
-Version:	2.20.1
-Release:	0.1
+Version:	2.22.0
+Release:	1
 License:	GPL
 Group:		Applications/System
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/sabayon/2.20/%{name}-%{version}.tar.bz2
-# Source0-md5:	1d3217ddffa413651d918844e5f5a7d9
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/sabayon/2.22/%{name}-%{version}.tar.bz2
+# Source0-md5:	39159282db60bfdfcd8569ecb5a992f5
+Patch0:		%{name}-pld.patch
+Patch1:		%{name}-pythonpath.patch
 URL:		http://www.gnome.org/projects/sabayon
+BuildRequires:	autoconf >= 2.59
+BuildRequires:	automake
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 BuildRequires:	gtk+2-devel >= 2:2.8.17
+BuildRequires:	intltool >= 0.36.2
 BuildRequires:	python-devel
 BuildRequires:	python-pygtk-devel >= 2.8.6
-BuildRequires:	usermode
-BuildRequires:	xorg-x11-devel
-Requires(post,preun):	shadow-utils
 Requires(post,postun):	gtk+2 >= 2.8.17
 %pyrequires_eq  python-modules
-Requires:	gamin-python
-Requires:	libxml2-python
+Requires(post,postun):	desktop-file-utils
+Requires(post,postun):	hicolor-icon-theme
+Requires:	python-gamin
 Requires:	python-gnome-gconf >= 2.12.4
 Requires:	python-ldap
+Requires:	python-libxml2
 Requires:	python-pygtk >= 2.8.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -40,8 +43,16 @@ zmieniać i utrzymywać domyślne zachowanie środowiska GNOME.
 Summary:	Graphical tools for Sabayon profile management
 Summary(pl.UTF-8):	Graficzne narzędzia do zarządzania profilami Sabayon
 Group:		Applications/System
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
+Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/usr/lib/rpm/user_group.sh
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
+Requires(pre):	/usr/sbin/usermod
 Requires:	%{name} = %{version}-%{release}
-Requires:	shadow
+Requires:	pwdutils
 Requires:	xorg-xserver-Xnest
 
 %description admin
@@ -54,11 +65,17 @@ zarządzania profilami Sabayon.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
+%{__intltoolize}
+%{__aclocal}
+%{__autoheader}
+%{__autoconf}
+%{__automake}
 %configure \
-	--enable-consolehelper=yes \
-	--with-prototype-user=%{name}-admin
+	--with-prototype-user=sabayon
 
 %{__make}
 
@@ -67,46 +84,39 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/gconf/2
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	PAM_PREFIX=$RPM_BUILD_ROOT%{_sysconfdir}
+	DESTDIR=$RPM_BUILD_ROOT
 
 echo 'include "$(HOME)/.gconf.path.defaults"'  > $RPM_BUILD_ROOT%{_sysconfdir}/gconf/2/local-defaults.path
 echo 'include "$(HOME)/.gconf.path.mandatory"' > $RPM_BUILD_ROOT%{_sysconfdir}/gconf/2/local-mandatory.path
 
 desktop-file-install --vendor gnome --delete-original \
 	--dir $RPM_BUILD_ROOT%{_desktopdir} \
-	--add-category X-Fedora-Extra \
 	$RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
-# We don't want these
 rm -f $RPM_BUILD_ROOT%{py_sitedir}/%{name}/xlib.la
 rm -f $RPM_BUILD_ROOT%{py_sitedir}/%{name}/xlib.a
 
+%py_postclean
 %find_lang sabayon
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %pre admin
-%groupadd -r %{name}-admin
-%useradd -r -s /sbin/nologin -c "Sabayon user" -g %{name}-admin %{name}-admin
-/usr/sbin/usermod -d "" %{name}-admin >/dev/null 2>&1 || :
+%groupadd -g 225 sabayon
+%useradd -u 225 -d %{_datadir}/empty -c "Sabayon user" -g sabayon sabayon
 
 %post admin
-touch --no-create %{_datadir}/icons/hicolor
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-	gtk-update-icon-cache -q %{_datadir}/icons/hicolor
-fi
+%update_desktop_database_post
+%update_icon_cache hicolor
 
 %postun admin
-touch --no-create %{_datadir}/icons/hicolor
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-	gtk-update-icon-cache -q %{_datadir}/icons/hicolor
-fi
+%update_desktop_database_postun
+%update_icon_cache hicolor
 
 if [ $1 -eq 0 ]; then
-	%userremove %{name}-admin
-	%groupremove %{name}-admin
+	%userremove sabayon
+	%groupremove sabayon
 fi
 
 %files -f sabayon.lang
@@ -116,44 +126,24 @@ fi
 %config(noreplace) %{_sysconfdir}/gconf/2/local-mandatory.path
 %config(noreplace) %{_sysconfdir}/X11/xinit/xinitrc.d/%{name}*
 %{_sysconfdir}/desktop-profiles
-%attr(755,root,root) %{_sbindir}/%{name}-apply
+%attr(755,root,root) %{_sbindir}/sabayon-apply
 %dir %{py_sitedir}/%{name}
-%{py_sitedir}/%{name}/__init__.py*
-%{py_sitedir}/%{name}/config.py*
-%{py_sitedir}/%{name}/cache.py*
-%{py_sitedir}/%{name}/dirmonitor.py*
-%{py_sitedir}/%{name}/mozilla_bookmarks.py*
-%{py_sitedir}/%{name}/storage.py*
-%{py_sitedir}/%{name}/userdb.py*
-%{py_sitedir}/%{name}/userprofile.py*
-%{py_sitedir}/%{name}/util.py*
+%{py_sitedir}/%{name}/*.py[co]
+%dir %{py_sitedir}/%{name}/sources
+%{py_sitedir}/%{name}/sources/*.py[co]
+%dir %{py_sitedir}/%{name}/lockdown
+%{py_sitedir}/%{name}/lockdown/*.py[co]
 
 %files admin
 %defattr(644,root,root,755)
 %doc doc/index.html doc/testing.html doc/helping.html doc/developing.html
 %doc doc/sabayon.css doc/*.jpg doc/*.gif
-%config(noreplace) /etc/pam.d/%{name}
-%config(noreplace) /etc/security/console.apps/%{name}
-%attr(755,root,root) %{_bindir}/%{name}
-%attr(755,root,root) %{_sbindir}/%{name}
-%{_libexecdir}/%{name}*
+%attr(755,root,root) %{_bindir}/sabayon
+%attr(755,root,root) %{_libexecdir}/sabayon-session
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/glade
 %{_datadir}/%{name}/glade/*.glade
 %{_desktopdir}/gnome-%{name}.desktop
-%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+%{_iconsdir}/hicolor/*/apps/*.png
+%{_iconsdir}/hicolor/*/apps/*.svg
 %attr(755,root,root) %{py_sitedir}/%{name}/xlib.so
-%{py_sitedir}/%{name}/aboutdialog.py*
-%{py_sitedir}/%{name}/changeswindow.py*
-%{py_sitedir}/%{name}/editorwindow.py*
-%{py_sitedir}/%{name}/fileviewer.py*
-%{py_sitedir}/%{name}/gconfviewer.py*
-%{py_sitedir}/%{name}/profilesdialog.py*
-%{py_sitedir}/%{name}/protosession.py*
-%{py_sitedir}/%{name}/saveconfirm.py*
-%{py_sitedir}/%{name}/sessionwidget.py*
-%{py_sitedir}/%{name}/sessionwindow.py*
-%{py_sitedir}/%{name}/usermod.py*
-%{py_sitedir}/%{name}/usersdialog.py*
-%{py_sitedir}/%{name}/lockdownappliersabayon.py*
-%{py_sitedir}/%{name}/lockdown
