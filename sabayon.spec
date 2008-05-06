@@ -19,7 +19,7 @@ BuildRequires:	gettext
 BuildRequires:	gtk+2-devel >= 2:2.8.17
 BuildRequires:	intltool >= 0.36.2
 BuildRequires:	python-devel
-BuildRequires:	python-pygtk-devel >= 2.8.6
+BuildRequires:	python-pygtk-devel >= 2:2.8.6
 Requires(post,postun):	gtk+2 >= 2.8.17
 %pyrequires_eq  python-modules
 Requires(post,postun):	desktop-file-utils
@@ -28,7 +28,7 @@ Requires:	python-gamin
 Requires:	python-gnome-gconf >= 2.12.4
 Requires:	python-ldap
 Requires:	python-libxml2
-Requires:	python-pygtk-gtk >= 2.8.6
+Requires:	python-pygtk-gtk >= 2:2.8.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
