@@ -53,7 +53,8 @@ Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
 Requires(pre):	/usr/sbin/usermod
 Requires:	%{name} = %{version}-%{release}
-Requires:	pwdutils
+# this is virtual for shadow and pwdutils
+Requires:	shadow
 Requires:	xorg-xserver-Xnest
 
 %description admin
