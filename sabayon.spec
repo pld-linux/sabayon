@@ -15,12 +15,15 @@ URL:		http://www.gnome.org/projects/sabayon
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	desktop-file-utils
-BuildRequires:	gettext
+BuildRequires:	gettext-devel
+BuildRequires:	gnome-common
 BuildRequires:	gtk+2-devel >= 2:2.8.17
 BuildRequires:	intltool >= 0.36.2
 BuildRequires:	libtool
+BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 BuildRequires:	python-pygtk-devel >= 2:2.8.6
+BuildRequires:	rpm-pythonprov
 Requires(post,postun):	gtk+2 >= 2.8.17
 %pyrequires_eq  python-modules
 Requires(post,postun):	desktop-file-utils
