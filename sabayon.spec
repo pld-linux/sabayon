@@ -4,7 +4,7 @@ Summary:	Tool to maintain user profiles in a GNOME desktop
 Summary(pl.UTF-8):	Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
 Name:		sabayon
 Version:	2.22.1
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/System
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/sabayon/2.22/%{name}-%{version}.tar.bz2
@@ -27,6 +27,7 @@ BuildRequires:	rpm-pythonprov
 Requires(post,postun):	gtk+2 >= 2.8.17
 %pyrequires_eq  python-modules
 Requires(post,postun):	desktop-file-utils
+Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires:	python-gamin
 Requires:	python-gnome-gconf >= 2.12.4
