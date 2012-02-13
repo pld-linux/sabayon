@@ -20,6 +20,7 @@ BuildRequires:	gnome-common
 BuildRequires:	gtk+2-devel >= 2:2.8.17
 BuildRequires:	intltool >= 0.36.2
 BuildRequires:	libtool
+BuildRequires:	pessulus
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 BuildRequires:	python-pygtk-devel >= 2:2.8.6
