@@ -1,5 +1,7 @@
 # TODO
 # - nonstandard in (in pld means) %config in files
+# - unpackaged files
+#
 Summary:	Tool to maintain user profiles in a GNOME desktop
 Summary(pl.UTF-8):	Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
 Name:		sabayon
@@ -107,7 +109,7 @@ desktop-file-install --vendor gnome --delete-original \
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/%{name}/xlib.a
 
 %py_postclean
-%find_lang sabayon
+%find_lang %{name} --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -135,24 +137,19 @@ fi
 %config(noreplace) %{_sysconfdir}/gconf/2/local-defaults.path
 %config(noreplace) %{_sysconfdir}/gconf/2/local-mandatory.path
 %config(noreplace) %{_sysconfdir}/X11/xinit/xinitrc.d/%{name}*
-%{_sysconfdir}/desktop-profiles
 %attr(755,root,root) %{_sbindir}/sabayon-apply
 %dir %{py_sitedir}/%{name}
 %{py_sitedir}/%{name}/*.py[co]
 %dir %{py_sitedir}/%{name}/sources
 %{py_sitedir}/%{name}/sources/*.py[co]
-%dir %{py_sitedir}/%{name}/lockdown
-%{py_sitedir}/%{name}/lockdown/*.py[co]
 
 %files admin
 %defattr(644,root,root,755)
-%doc doc/index.html doc/testing.html doc/helping.html doc/developing.html
-%doc doc/sabayon.css doc/*.jpg doc/*.gif
 %attr(755,root,root) %{_bindir}/sabayon
 %attr(755,root,root) %{_libexecdir}/sabayon-session
 %dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/glade
-%{_datadir}/%{name}/glade/*.glade
+%dir %{_datadir}/%{name}/ui
+%{_datadir}/%{name}/ui/*.ui
 %{_desktopdir}/gnome-%{name}.desktop
 %{_iconsdir}/hicolor/*/apps/*.png
 %{_iconsdir}/hicolor/*/apps/*.svg
