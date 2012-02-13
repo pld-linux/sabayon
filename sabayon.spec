@@ -25,6 +25,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 BuildRequires:	python-pygtk-devel >= 2:2.8.6
 BuildRequires:	rpm-pythonprov
+BuildRequires:	xorg-xserver-Xephyr
 Requires(post,postun):	gtk+2 >= 2.8.17
 %pyrequires_eq  python-modules
 Requires(post,postun):	desktop-file-utils
