@@ -21,12 +21,3 @@
      *)
        echo "Your distribution (${with_distro}) is not yet supported!  (patches welcome)"
        exit 1
-@@ -254,7 +254,7 @@
- 
- AC_PATH_PROG(XNEST_PATH,Xnest,no)
- if test "x$XNEST_PATH" = "xno" ; then
--  AC_MSG_ERROR(Xnest binary not found)
-+  XNEST_PATH="/usr/bin/Xnest" 
- fi
- AC_SUBST(XNEST_PATH)
- 

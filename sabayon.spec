@@ -3,12 +3,12 @@
 Summary:	Tool to maintain user profiles in a GNOME desktop
 Summary(pl.UTF-8):	Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
 Name:		sabayon
-Version:	2.22.1
-Release:	6
-License:	GPL
+Version:	2.30.1
+Release:	1
+License:	GPL v2+
 Group:		Applications/System
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/sabayon/2.22/%{name}-%{version}.tar.bz2
-# Source0-md5:	b7dde445040d022899ae3f452a686c80
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/sabayon/2.30/%{name}-%{version}.tar.bz2
+# Source0-md5:	c13b3b992cf686c1397dc28b5f2a6f20
 Patch0:		%{name}-pld.patch
 Patch1:		%{name}-pythonpath.patch
 URL:		http://www.gnome.org/projects/sabayon
@@ -101,8 +101,8 @@ desktop-file-install --vendor gnome --delete-original \
 	--dir $RPM_BUILD_ROOT%{_desktopdir} \
 	$RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 
-rm -f $RPM_BUILD_ROOT%{py_sitedir}/%{name}/xlib.la
-rm -f $RPM_BUILD_ROOT%{py_sitedir}/%{name}/xlib.a
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/%{name}/xlib.la
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/%{name}/xlib.a
 
 %py_postclean
 %find_lang sabayon
