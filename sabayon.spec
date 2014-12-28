@@ -17,7 +17,7 @@ URL:		http://www.gnome.org/projects/sabayon
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	desktop-file-utils
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	gnome-common
 BuildRequires:	gtk+2-devel >= 2:2.8.17
 BuildRequires:	intltool >= 0.36.2
