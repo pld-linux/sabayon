@@ -6,7 +6,7 @@ Summary:	Tool to maintain user profiles in a GNOME desktop
 Summary(pl.UTF-8):	Narzędzie do zarządzania profilami użytkowników w środowisku GNOME
 Name:		sabayon
 Version:	2.30.1
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/sabayon/2.30/%{name}-%{version}.tar.bz2
@@ -136,7 +136,7 @@ fi
 %doc AUTHORS ChangeLog NEWS README TODO ISSUES sabayon.schema
 %config(noreplace) %{_sysconfdir}/gconf/2/local-defaults.path
 %config(noreplace) %{_sysconfdir}/gconf/2/local-mandatory.path
-%config(noreplace) %{_sysconfdir}/X11/xinit/xinitrc.d/%{name}*
+%attr(755,root,root) %{_sysconfdir}/X11/xinit/xinitrc.d/sabayon-xinitrc.sh
 %attr(755,root,root) %{_sbindir}/sabayon-apply
 %dir %{py_sitedir}/%{name}
 %{py_sitedir}/%{name}/*.py[co]
