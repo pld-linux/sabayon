@@ -26,6 +26,7 @@ BuildRequires:	pessulus
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 BuildRequires:	python-pygtk-devel >= 2:2.8.6
+BuildRequires:	python-pyxdg
 BuildRequires:	rpm-pythonprov
 BuildRequires:	xorg-xserver-Xephyr
 Requires(post,postun):	gtk+2 >= 2.8.17
@@ -109,7 +110,7 @@ desktop-file-install --vendor gnome --delete-original \
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/%{name}/xlib.a
 
 %py_postclean
-%find_lang %{name} --all-name
+%find_lang %{name} --all-name --with-omf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -142,6 +143,17 @@ fi
 %{py_sitedir}/%{name}/*.py[co]
 %dir %{py_sitedir}/%{name}/sources
 %{py_sitedir}/%{name}/sources/*.py[co]
+%{_mandir}/man8/sabayon.8*
+%{_mandir}/man8/sabayon-apply.8*
+%dir %{_datadir}/gnome/help/sabayon
+%{_datadir}/gnome/help/sabayon/C
+%lang(de) %{_datadir}/gnome/help/sabayon/de
+%lang(el) %{_datadir}/gnome/help/sabayon/el
+%lang(es) %{_datadir}/gnome/help/sabayon/es
+%lang(fr) %{_datadir}/gnome/help/sabayon/fr
+%lang(sv) %{_datadir}/gnome/help/sabayon/sv
+%lang(uk) %{_datadir}/gnome/help/sabayon/uk
+%lang(zh_CN) %{_datadir}/gnome/help/sabayon/zh_CN
 
 %files admin
 %defattr(644,root,root,755)
